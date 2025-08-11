@@ -2,10 +2,20 @@ import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaLock, FaEye } from "react-icons/fa";
 import BG from '../assets/img/BG1.jpg'
 import { FaEyeSlash } from "react-icons/fa";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
+import { Bounce, toast } from "react-toastify";
+import { PulseLoader } from "react-spinners";
+
+
 const RegistrationForm = () => {
+    const auth = getAuth();
+
     const[showPassword, setShowPassword] = useState(false)
     const[confirmShowPass,setConfirmShowPass] = useState(false)
     const [formData, setFormData]= useState({username:'',email:'',password:'',ConfirmPassword:'',errors:''})
+
+    const [alreadyUser,setAlreadyUser] =useState('')
+    const[loading,setLoading]=useState(true)
     // regex
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
@@ -18,7 +28,58 @@ const RegistrationForm = () => {
             if(!emailRegex.test(formData.email)) return setFormData((prev)=>({...prev,errors:'email is not valid'}))
         if(!passwordRegex.test(formData.password)) return setFormData((prev)=>({...prev,errors:'Choose a Strong Password'}))
         
-        if(formData.ConfirmPassword !== formData.password) return setFormData((prev)=>({...prev,errors:'Password does not matched'}))    
+        if(formData.ConfirmPassword !== formData.password) return setFormData((prev)=>({...prev,errors:'Password does not matched'}))  
+
+            setLoading(!loading)
+            
+        createUserWithEmailAndPassword(auth, formData.email, formData.password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                
+
+                console.log(user)
+                 
+                // update profile / username update
+                updateProfile(auth.currentUser, { displayName: formData.username, photoURL: "https://example.com/jane-q-user/profile.jpg"})
+                .then(() => {   
+                sendEmailVerification(auth.currentUser)
+                    .then(() => {
+                        // Email verification sent!
+                        console.log('hoise')
+                        setLoading(true)
+
+                        toast.info('Email Verification send!', {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                        transition: Bounce,
+                        });
+                                            });
+                })
+                .catch((error) => {
+                // An error occurred
+                // ...
+                });
+                
+                
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(error)
+                console.log(errorCode)
+                setLoading(true)
+                if(errorCode === 'auth/email-already-in-use'){
+                    console.log('Email already used')
+                    setAlreadyUser('Email already used')
+                }
+            });    
     }
 
 
@@ -31,6 +92,7 @@ const RegistrationForm = () => {
           {/* Full Name */}
           <div className="relative">
             <p className="text-[18px] font-sans text-red-600 text-center">{formData.errors}</p>
+            <p className="text-[18px] font-sans text-red-600 text-center">{alreadyUser}</p>
             <label className="block text-gray-700 mb-1">Full Name</label>
             <div className="flex items-center border border-gray-300 rounded-md px-3 focus-within:ring-2 focus-within:ring-indigo-400">
               <FaUser className="text-gray-400 mr-2" />
@@ -98,12 +160,26 @@ const RegistrationForm = () => {
           </div>
 
           {/* Button */}
+          {
+            loading ?
+
           <button
             type="submit"
             className="BTN cursor-pointer w-full bg-sky-600 text-white font-medium py-2 rounded-[10px]"
           >
             Register
           </button>
+
+          :
+
+          <button
+            type="submit"
+            className="BTN cursor-pointer w-full bg-sky-600 text-white font-medium py-2 rounded-[10px]"
+          >
+            <PulseLoader color="#fff" />
+          </button>
+          }
+
         </form>
       </div>
     </div>
