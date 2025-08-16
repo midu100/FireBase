@@ -5,6 +5,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { Bounce, toast } from "react-toastify";
 import { PulseLoader } from "react-spinners";
+import { Link } from "react-router-dom";
 
 
 const RegistrationForm = () => {
@@ -41,7 +42,7 @@ const RegistrationForm = () => {
                 console.log(user)
                  
                 // update profile / username update
-                updateProfile(auth.currentUser, { displayName: formData.username, photoURL: "https://example.com/jane-q-user/profile.jpg"})
+                updateProfile(auth.currentUser, { displayName: formData.username, photoURL: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"})
                 .then(() => {   
                 sendEmailVerification(auth.currentUser)
                     .then(() => {
@@ -179,6 +180,15 @@ const RegistrationForm = () => {
             <PulseLoader color="#fff" />
           </button>
           }
+
+          {/* Register Link */}
+        <p className="text-center text-gray-600">
+           Have an account?{" "}
+        
+          <Link to="/login" className="text-blue-600 hover:underline font-medium">
+            Sign In
+          </Link>
+        </p>
 
         </form>
       </div>

@@ -7,13 +7,26 @@ import app from './Firebase.config'
 import { ToastContainer } from 'react-toastify'
 import Login from './pages/Login'
 import Home from './pages/Home'
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
+import LayoutOne from './layout/LayoutOne'
+import NotesHome from './pages/NotesHome'
 
 
 function App() {
+  const myRoute =createBrowserRouter(createRoutesFromElements(
+    <Route>
+      <Route path='/' element={<LayoutOne />} >
+         <Route index element={<Home />} />
+      </Route>
+         <Route pathe path='/notes' element={<NotesHome />} />
+         <Route path='/login' element={<Login />} />
+         <Route path='/register' element={<RegistrationForm />} />
+    </Route>
+  ))
 
   return (
     <>
-     <Home />
+    <RouterProvider router={myRoute} />
      <ToastContainer></ToastContainer>
     </>
   )
