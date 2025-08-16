@@ -17,8 +17,8 @@ function App() {
     <Route>
       <Route path='/' element={<LayoutOne />} >
          <Route index element={<Home />} />
+         <Route path='/notes' element={<NotesHome />} />
       </Route>
-         <Route pathe path='/notes' element={<NotesHome />} />
          <Route path='/login' element={<Login />} />
          <Route path='/register' element={<RegistrationForm />} />
     </Route>
