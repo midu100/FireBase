@@ -38,7 +38,19 @@ const Login = () => {
               const user = userCredential.user;
               console.log(user)
               // ...
-              if(user.emailVerified === false) return error('Please verify your email frist')
+              if(user.emailVerified === false) return toast.warn('Your email is not verified', {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  transition: Slide,
+                  });
+
+
               dispatch(userInfo(user))
               localStorage.setItem('userInfo' , JSON.stringify(user))
               navigate('/notes')
@@ -46,6 +58,7 @@ const Login = () => {
             .catch((error) => {
               const errorCode = error.code;
               const errorMessage = error.message;
+              console.log(errorCode)
               // error msg
               toast.warn('Your email or password is incorrect!', {
                 position: "top-right",
