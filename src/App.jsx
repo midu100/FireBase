@@ -9,7 +9,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import LayoutOne from './layout/LayoutOne'
-import NotesHome from './pages/NotesHome'
+
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
     <Route>
       <Route path='/' element={<LayoutOne />} >
          <Route index element={<Home />} />
-         <Route path='/notes' element={<NotesHome />} />
+         
       </Route>
          <Route path='/login' element={<Login />} />
          <Route path='/register' element={<RegistrationForm />} />

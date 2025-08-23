@@ -6,17 +6,17 @@ import Navbar from '../components/Navbar'
 import { useSelector } from 'react-redux'
 
 const LayoutOne = () => {
-  const currentUserData = useSelector((state)=>state.currentUser.value)
+  const reduxData = useSelector((state)=>state.currentUser.value)
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if(currentUserData === null){
-      navigate('/')
+    if(reduxData === null){
+      navigate('/login')
     }
   },[])
   return (
     <div>
-     
+         <Navbar />
         <Outlet />
     </div>
   )
