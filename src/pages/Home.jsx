@@ -1,27 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdAdd, MdSearch, MdDelete, MdEdit } from "react-icons/md";
 import BG from '../assets/img/BG1.jpg'
 import Navbar from "../components/Navbar";
 import SingleNote from "../components/common/SingleNote";
 
 const Home = () => {
+  const [allColor,setAllColor] = useState('#fff')
+  console.log(allColor)
+
+  const handleColors = (color)=>{
+    setAllColor(color)
+  }
   return (
     <div style={{background:`url(${BG})`,backgroundRepeat:'no-repeat',backgroundSize:'cover',backgroundPosition:'center'}} className="min-h-screen bg-gray-100">
       {/* Header */}
-      <Navbar />
 
       {/* Create Note Section */}
-      <section  className="max-w-4xl mx-auto px-4 py-6">
-        <div className="bg-white rounded-lg shadow p-4 flex items-center space-x-3">
-          <input
-            type="text"
-            placeholder="Take a note..."
-            className="flex-1 border-none outline-none"
-          />
+      <section  className="max-w-4xl mx-auto px-4  py-[10px] ">
+        
+        <div style={{ backgroundColor: allColor }}  className={` rounded-lg shadow p-4 flex justify-between items-center space-x-3`}>
+          <div className="flex flex-col gap-[15px] w-[700px]">
+            <input type="text" placeholder="TITLE..." className="border-none w-full outline-none text-[22px] font-bold" />
+            <textarea className="outline-none" placeholder="Take Note..."></textarea>
+          </div>
           <button className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-full">
             <MdAdd size={24} />
           </button>
         </div>
+
+        <div className="flex gap-[10px] items-center mt-[10px] justify-center">
+          <p className="text-[24px] font-medium text-[#c94dec]">Changing Colors:</p>
+          <button onClick={()=>handleColors('#FFF2EB')} className="w-[40px] border border-[#7c7a7a] hover:shadow-[0px_4px_26px_0px_rgba(0,_0,_0,_0.1)] duration-300 h-[40px] rounded-full bg-[#FFF2EB] cursor-pointer"></button>
+          <button onClick={()=>handleColors('#80D8C3')} className="w-[40px] border border-[#7c7a7a] hover:shadow-[1px_4px_34px_11px_rgba(34,_197,_94,_0.5)] duration-300 h-[40px] rounded-full bg-[#80D8C3] cursor-pointer"></button>
+          <button onClick={()=>handleColors('#4DA8DA')} className="w-[40px] border border-[#7c7a7a] hover:shadow-[1px_4px_34px_11px_rgba(59,_130,_246,_0.5)] duration-300 h-[40px] rounded-full bg-[#4DA8DA] cursor-pointer"></button>
+          <button onClick={()=>handleColors('#00FFDE')} className="w-[40px] border border-[#7c7a7a] hover:shadow-[1px_4px_34px_11px_rgba(34,_197,_94,_0.5)] duration-300 h-[40px] rounded-full bg-[#00FFDE] cursor-pointer"></button>
+        </div>
+
       </section>
 
       {/* Notes Grid */}

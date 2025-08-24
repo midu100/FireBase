@@ -53,7 +53,7 @@ const Login = () => {
 
               dispatch(userInfo(user))
               localStorage.setItem('userInfo' , JSON.stringify(user))
-              navigate('/notes')
+              navigate('/')
             })
             .catch((error) => {
               const errorCode = error.code;
