@@ -6,7 +6,7 @@ import SingleNote from "../components/common/SingleNote";
 import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
 import { useSelector } from "react-redux";
 
-const Home = () => {
+const Home = ({editNoteData}) => {
   const db = getDatabase();
   
   // reduxData
@@ -17,15 +17,7 @@ const Home = () => {
   const[inputValue,setInputValue] = useState('')
   const[noteContent,setNoteContent] = useState('')
   const[color,setColor] = useState('fff')
-
-  // const handleColors = (color)=>{
-  //   setAllColor(color)
-  // }
    
-
-
-
-
 
   // Write data / data pathano hosse
   const handleAdd = ()=>{
@@ -41,19 +33,13 @@ const Home = () => {
     setNoteContent('')
   }
 
-  // // Read data / data newar jnno
-  // useEffect(()=>{
-  //     const starCountRef = ref(db, 'users/');
-  //     onValue(starCountRef, (snapshot) => {
-  //       const data = snapshot.val();
-  //       console.log(snapshot.val())
-  //     });
-  // },[])
-
   // delete data
   const handleDelete = ()=>{
     remove(ref(db,'allTodo/'))
   }
+
+  // edit data / proofs kora hosse
+  
 
 
   return (

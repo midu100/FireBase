@@ -3,6 +3,8 @@ import { MdSearch } from 'react-icons/md'
 import { IoIosLogOut } from "react-icons/io";
 import { Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { GoHome } from "react-icons/go";
 
 const Navbar = () => {
   const currentUserData = useSelector((state)=>state.currentUser.value)
@@ -27,6 +29,10 @@ const Navbar = () => {
             className="bg-transparent outline-none flex-1"
           />
         </div>
+          <div className='flex gap-[20px]'>
+            <Link to={'/bin'}><RiDeleteBin6Line className='text-[25px] cursor-pointer'/></Link>
+            <Link to={'/'} ><GoHome className='text-[25px] cursor-pointer'/></Link>
+          </div>
         <div className='flex items-center gap-[10px]'>
           <div className='IMG w-[40px] h-[40px] bg-gray-200 rounded-full overflow-hidden'><img src={currentUserData?.photoURL} alt='img' /></div>
           <h2 className='text-[17px] font-semibold font-'>{currentUserData?.displayName}</h2>
